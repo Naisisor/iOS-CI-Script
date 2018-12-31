@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon-precomposed" href="ICON_URL" sizes="114x114">
+    <title>APP_NAME - iOS 持续集成 APP 安装</title>
+    <style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, code, form, fieldset, legend, button, input, textarea, th, td {
+    margin:0;
+    padding:0
+    }
+    table {
+    border-collapse:collapse;
+    border-spacing:0
+    }
+    html {
+    background-color:#ffffff;
+    }
+    body {
+    line-height:130%;
+    font-size:14px;
+    background-color:#FAFAFA;
+    -webkit-text-size-adjust:none;
+    -webkit-touch-callout: none;
+    word-wrap:break-word;
+    -webkit-user-select:none;
+    }
+    .f16 {
+    font-size:16px
+    }
+    ul {
+    list-style:none
+    }
+    a {
+    text-decoration:none;
+    }
+    .b {
+    font-weight:700
+    }
+    .m {
+    margin:10px
+    }
+    .m4 {
+    margin:4px
+    }
+    .fl {
+    float:left
+    }
+    .fr {
+    float:right
+    }
+    .clr:before, .clr:after {
+    content:"";
+    display:table;
+    }
+    .clr:after {
+    clear:both;
+    }
+    .bodyouter {
+    background:#545454;
+    padding-bottom:20px;
+    padding-top:20px;
+    }
+    .bodyer {
+    background:#CFD7DA;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    margin-left:10px;
+    margin-right:10px;
+    text-align:center;
+    padding-top:46px;
+    height:340px;
+    }
+    .logo {
+    text-align:center;
+    display:block;
+    }
+    .logo-img {
+    width:120px;
+    height:120px;
+    }
+    .note-title {
+    line-height:27px;
+    color:#6B8EA9;
+    font-size:18px;
+    text-align:center;
+    }
+    .note-word {
+    text-align:center;
+    o color:#646464;
+    font-size:18px;
+    padding-top:15px;
+    }
+    .add-img {
+    width:21px;
+    height:21px;
+    }
+    .note-word-center, .note-word-bottom {
+    text-align:center;
+    color:#646464;
+    font-size:18px;
+    line-height:21px;
+    padding-top:6px;
+    }
+    .note-word-center {
+    line-height:15px;
+    }
+    .note-word-bottom {
+    margin-bottom:40px;
+    }
+    .bottom-borderset {
+    display:block;
+    border-top:2px inset #3F5C80;
+    border-bottom:1px outset #ffffff;
+    }
+    .body-bottom {
+    padding-top:15px;
+    text-align:center;
+    line-height:27px;
+    font-size:14px;
+    color:#646464;
+    }
+    .img-or {
+    line-height:21px;
+    margin-bottom:3px;
+    padding-left:5px;
+    padding-right:5px;
+    }
+    .header-top {
+    height:45px;
+    background:#0074ff;
+    display:block;
+    line-height:45px;
+    font-size:18px;
+    font-weight:bold;
+    text-align:center;
+    color:#fff;
+    }
+    </style>
+
+    <div class="header-top">Trunk BUILD_NUM APP_NAME 开发版本</div>
+    <div class="bodyouter">
+        <a href="itms-services://?action=download-manifest&url=PLIST_URL">
+        <div class="bodyer">
+            <div class="logo">
+                <img src="ICON_URL" class="logo-img">
+            </div>
+            <div class="note-title">安装 iOS
+            </div>
+            <div class="note-word-bottom">点击图标安装 APP_NAME 开发版本
+            </div>
+        </div>
+        </a>
+    </div>
+</html>
