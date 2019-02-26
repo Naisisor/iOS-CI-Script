@@ -11,16 +11,15 @@ def upload_itunes_connect(ipa_path):
     if EnvEnum.ITC_USER.value is None \
             or EnvEnum.ITC_PASSWORD.value is None:
         raise Exception('开发者账号用户名和密码不能为空')
-    altool = '$(dirname $(xcode-select -p))/Applications/' \
-             'Application\ Loader.app/Contents/Frameworks/' \
-             'ITunesSoftwareService.framework/Versions/A/Support/altool'
     subprocess.run('echo "Validating app ..."', shell=True)
-    subprocess.run(f'time {altool} --validate-app '
+    subprocess.run(f'time {EnvEnum.ALTOOL.value} '
+                   f'--validate-app '
                    f'-f {ipa_path} '
                    f'-u {EnvEnum.ITC_USER.value} '
                    f'-p {EnvEnum.ITC_PASSWORD.value}', shell=True)
     subprocess.run('echo "Uploading app to iTunes Connect ..."', shell=True)
-    subprocess.run(f'time {altool} --upload-app '
+    subprocess.run(f'time {EnvEnum.ALTOOL.value} '
+                   f'--upload-app '
                    f'-f {ipa_path} '
                    f'-u {EnvEnum.ITC_USER.value} '
                    f'-p {EnvEnum.ITC_PASSWORD.value}', shell=True)

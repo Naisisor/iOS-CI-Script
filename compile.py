@@ -27,7 +27,7 @@ def compile_app(app_workspace, app_scheme, method):
     # export ipa
     xc_archive_file = f'{EnvEnum.BUILD_PATH.value}/{app_scheme}.xcarchive'
     if not os.path.exists(xc_archive_file):
-        raise Exception(f'{app_scheme}.xcarchive 不存在')
+        raise Exception(f'{app_scheme}.xcarchive 不存在，编译失败，请联系开发人员')
     subprocess.run(
         f'xcodebuild -exportArchive '
         f'-archivePath {xc_archive_file} '
