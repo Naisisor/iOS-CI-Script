@@ -203,8 +203,8 @@
                         plistRelativePath = this.findFile(data.artifacts, 'plist')
                         this.qacodeUrl = this.joinUrl(data.url, 'artifact', qrcodeRelativePath)
                         this.plistUrl = this.joinUrl(this.buildUrl, 'artifact', plistRelativePath, service = true)
-                        this.jenkinsUrl = data.url.split('job')[0]
-                        jobUrl = this.buildUrl.split(data.id)[0]
+                        this.jenkinsUrl = data.url.split('/job/')[0]
+                        jobUrl = this.buildUrl.split(`/${data.id}/`)[0]
                         this.getJobInfo(this.formatUrl(jobUrl))
                         this.lastBuildPlistUrl = this.joinUrl(jobUrl, 'lastSuccessfulBuild/artifact', plistRelativePath, service = true)
                     });
