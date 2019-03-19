@@ -36,7 +36,7 @@ def archive_file(scheme, app_name, icon_path, icon_url):
     shutil.copy(f'{EnvEnum.BUILD_PATH.value}/{scheme}/{scheme}.ipa',
                 archive_ipa_path)
     shutil.copy(f'{EnvEnum.SCRIPT_ITMS_SERVICE_PATH.value}',
-                f'{EnvEnum.ARCHIVE_ITMS_SERVICE_PATH.value}')
+                f'{EnvEnum.ARCHIVE_PATH.value}/{scheme}.plist')
 
     # dSYM 文件处理
     dsym_zip = f'{EnvEnum.BUILD_PATH.value}/{scheme}.dsym.zip'
@@ -44,28 +44,26 @@ def archive_file(scheme, app_name, icon_path, icon_url):
         shutil.copy(
             dsym_zip, f'{EnvEnum.ARCHIVE_PATH.value}/{scheme}.dsym.zip')
 
-    credit_plist_url = f'{EnvEnum.ARCHIVE_ITMS_SERVICE_URL.value}'.replace(
-        '/', r'\/')
-    icon_url = icon_url.replace('/', r'\/')
     # 修改 html 内容
+    icon_url = icon_url.replace('/', r'\/')
+    build_url = EnvEnum.BUILD_URL_HTTPS.value.replace('/', r'\/')
+
     shutil.copy(
-        f'{EnvEnum.SCRIPT_PATH.value}/static/html/trunk_install_release.html',
-        f'{EnvEnum.ARCHIVE_PATH.value}/trunk_install_release.html')
+        f'{EnvEnum.SCRIPT_PATH.value}/static/html/download.html',
+        f'{EnvEnum.ARCHIVE_PATH.value}/{scheme}.html')
+
     subprocess.run(
-        f'sed -i "" "s/BUILD_NUM/{EnvEnum.BUILD_NUM.value}/g" {EnvEnum.ARCHIVE_PATH.value}/trunk_install_release.html',
+        f'sed -i "" "s/ICON_URL/{icon_url}/g" {EnvEnum.ARCHIVE_PATH.value}/{scheme}.html',
         shell=True)
     subprocess.run(
-        f'sed -i "" "s/PLIST_URL/{credit_plist_url}/g" {EnvEnum.ARCHIVE_PATH.value}/trunk_install_release.html',
+        f'sed -i "" "s/APP_NAME/{app_name}/g" {EnvEnum.ARCHIVE_PATH.value}/{scheme}.html',
         shell=True)
     subprocess.run(
-        f'sed -i "" "s/ICON_URL/{icon_url}/g" {EnvEnum.ARCHIVE_PATH.value}/trunk_install_release.html',
-        shell=True)
-    subprocess.run(
-        f'sed -i "" "s/APP_NAME/{app_name}/g" {EnvEnum.ARCHIVE_PATH.value}/trunk_install_release.html',
+        f'sed -i "" "s/BUILD_URL/{build_url}/g" {EnvEnum.ARCHIVE_PATH.value}/{scheme}.html',
         shell=True)
 
     # 生成二维码
-    html_url = f'{EnvEnum.ARCHIVE_URL.value}trunk_install_release.html'
+    html_url = f'{EnvEnum.ARCHIVE_URL.value}{scheme}.html'
     make_qr(
         html_url,
         f'{EnvEnum.SCRIPT_PATH.value}/{icon_path}',

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <title>APP_NAME</title>
+    <link rel="shortcut icon" href="ICON_URL" type="image/x-icon">
+    <link rel="icon" href="ICON_URL" type="image/x-icon">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="container-fluid mb-md-3">
+        <div class="row mt-5" id="summary">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+                <div class="row pt-xl-3 pt-md-3 pt-sm-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 text-center">
+                        <div class="row mb-md-3">
+                            <div class="offset-xl-4 col-xl-4 offset-md-4 col-md-4 offset-sm-4 col-sm-4">
+                                <img class="icon rounded" v-bind:src="iconUrl"/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                <h1 class="summary-title">{{ appName }}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 box">
+                                <ul class="breadcrumb pl-0 pt-0">
+                                    <li>版本：{{version}}『 {{buildInfo.id}} 』&nbsp;</li>
+                                    <li>更新于：{{this.updateTime}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-md-3 mb-sm-3 mb-xl-3" id="details">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+                <div class="row pt-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 text-center">
+                        <div class="row mb-2">
+                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                <a v-bind:href="plistUrl" class="btn btn-dark" style="width: 200px">安装</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 box">
+                                <ul class="breadcrumb pt-0 detail-desc">
+                                    <li>{{configuration}}</li>
+                                    <li>&nbsp;|&nbsp;适用于 iOS 设备</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                <img class="qrcode" v-bind:src="qacodeUrl">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xl-12 pt-xl-0 pt-0 mb-2 scan">
+                                扫码安装
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" id="qr-code">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-sm-2 col-sm-8">
+                <h3>最新构建</h3>
+                <div class="row pt-xl-3 pt-md-3 pt-sm-3">
+                    <div class="col-xl-12 col-md-12 col-sm-12 text-center ">
+                        <table class="table table-striped table-hover text-center">
+                            <tbody>
+                            <tr>
+                                <td width="5%"></td>
+                                <td class="text-left" width="40%">{{version}}『 {{lastBuildID}} 』
+                                </td>
+                                <td width="30%"></td>
+                                <td class="text-right" width="20%">
+                                    <a v-bind:href="lastBuildPlistUrl">安装</a>
+                                </td>
+                                <td width="5%"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container" style="z-index:-1;">
+            <div class="row">
+                <div class="col-xl-5 col-lg-5 col-md-6 col-sm-6 text-left" style="z-index:0;">
+                    <a v-bind:href="companyWebsite">{{appName}}</a>&nbsp;&nbsp;｜
+                    <a v-bind:href="jenkinsUrl" class="btn btn-sm"
+                       style="color:#fff !important; background:#56bc94 !important; border:0px !important; margin-top:-3px; font-size: 10px;"
+                    >持续集成平台</a>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6 text-right" style="z-index:0;">
+                    <img class="rounded-circle" v-bind:src="iconUrl"
+                         height="20" width="20"/>
+                    {{ company }}&nbsp;&nbsp;|&nbsp;&nbsp;Q&A <br/>Copyright © {{ copyright }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            companyWebsite: "https://www.jianshu.com/u/e60e5a646464",
+            company: "NAISI 科技",
+            copyright: "2018 - NAISI. All Rights",
+            appName: "APP_NAME",
+            updateTime: "",
+            jenkinsUrl: "",
+            version: "x.x.x",
+            buildUrl: "BUILD_URL",
+            iconUrl: "ICON_URL",
+            configuration: "Debug",
+            plistUrl: "",
+            qacodeUrl: "",
+            lastBuildID: "latest",
+            lastBuildPlistUrl: "",
+            buildInfo: {},
+            jobInfo: {}
+        },
+        methods: {
+            // 格式化时间戳
+            timestampToTime(ts) {
+                var date = new Date(ts) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-'
+                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+                var D = date.getDate() + ' '
+                var h = date.getHours() + ':'
+                var m = date.getMinutes() + ':'
+                var s = date.getSeconds()
+                return Y + M + D + h + m + s
+            },
+            // 查看构建信息中符合条件的文件
+            findFile: function (artifacts, suffix) {
+                for (d in artifacts) {
+                    item = artifacts[d]
+                    if (item.relativePath.indexOf(suffix) !== -1) {
+                        return artifacts[d].relativePath;
+                    }
+                }
+            },
+            findParameters: function (actions, key) {
+                for (a in actions) {
+                    action = actions[a]
+                    if (action.hasOwnProperty('parameters')) {
+                        for (i in action.parameters) {
+                            item = action.parameters[i]
+                            if (item.name === key) {
+                                return item.value
+                            }
+                        }
+                    }
+                }
+            },
+            // 拼接 URL
+            joinUrl: function (url, name, relativePath, service = false) {
+                if (service) {
+                    return `itms-services://?action=download-manifest&url=${url}${name}/${relativePath}`
+                } else {
+                    return `${url}${name}/${relativePath}`
+                }
+            },
+            formatUrl: function (url) {
+                if (url[url.length - 1] === '/') {
+                    apiUrl = `${url}api/json`
+                } else {
+                    apiUrl = `${url}/api/json`
+                }
+                return apiUrl
+            },
+            getJobInfo: function (url) {
+                axios.get(url).then((response) => {
+                    this.jobInfo = response.data
+                    this.lastBuildID = response.data.lastSuccessfulBuild.number
+                })
+            },
+            getBuildInfo: function () {
+                axios.get(this.formatUrl(this.buildUrl))
+                    .then(response => {
+                        data = response.data
+                        this.buildInfo = data
+                        this.updateTime = this.timestampToTime(data.timestamp)
+                        this.configuration = this.findParameters(data.actions, 'CONFIGURATIONS')
+                        this.version = this.findParameters(data.actions, 'APP_VERSION')
+                        qrcodeRelativePath = this.findFile(data.artifacts, 'png')
+                        plistRelativePath = this.findFile(data.artifacts, 'plist')
+                        this.qacodeUrl = this.joinUrl(data.url, 'artifact', qrcodeRelativePath)
+                        this.plistUrl = this.joinUrl(this.buildUrl, 'artifact', plistRelativePath, service = true)
+                        this.jenkinsUrl = data.url.split('job')[0]
+                        jobUrl = this.buildUrl.split(data.id)[0]
+                        this.getJobInfo(this.formatUrl(jobUrl))
+                        this.lastBuildPlistUrl = this.joinUrl(jobUrl, 'lastSuccessfulBuild/artifact', plistRelativePath, service = true)
+                    });
+            },
+        },
+        mounted() {
+            this.getBuildInfo();
+        }
+    });
+</script>
+<style type="text/css">
+    #app {
+        color: #585f69;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    }
+
+    a {
+        color: #56bc94;
+    }
+
+    .icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .summary-title {
+        font-size: 1.8rem;
+    }
+
+    .box ul {
+        display: flex;
+        justify-content: center;
+        background-color: #ffffff;
+    }
+
+    .detail-desc {
+        font-size: 0.9rem;
+    }
+
+    td {
+        font-size: 0.9rem;
+        background-color: #ffffff;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .copyright {
+        font-size: 14px !important;
+        color: #777777 !important;
+        background-color: #f4f4f4;
+        padding: 30px;
+    }
+
+    .scan {
+        height: 2.0rem;
+        font-size: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .copyright .container .row div.col-md-6 {
+            text-align: center !important;
+            margin-bottom: 10px
+        }
+    }
+
+</style>
+</html>
