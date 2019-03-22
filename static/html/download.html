@@ -179,9 +179,9 @@
             },
             formatUrl: function (url) {
                 if (url[url.length - 1] === '/') {
-                    apiUrl = `${url}api/json`
+                    apiUrl = `${url}`
                 } else {
-                    apiUrl = `${url}/api/json`
+                    apiUrl = `${url}/`
                 }
                 return apiUrl
             },
@@ -192,7 +192,7 @@
                 })
             },
             getBuildInfo: function () {
-                axios.get(this.formatUrl(this.buildUrl))
+                axios.get(`${this.formatUrl(this.buildUrl)}api/json`)
                     .then(response => {
                         data = response.data
                         this.buildInfo = data
@@ -201,12 +201,12 @@
                         this.version = this.findParameters(data.actions, 'APP_VERSION')
                         qrcodeRelativePath = this.findFile(data.artifacts, 'png')
                         plistRelativePath = this.findFile(data.artifacts, 'plist')
-                        this.qacodeUrl = this.joinUrl(data.url, 'artifact', qrcodeRelativePath)
-                        this.plistUrl = this.joinUrl(this.buildUrl, 'artifact', plistRelativePath, service = true)
-                        this.jenkinsUrl = data.url.split('/job/')[0]
+                        this.qacodeUrl = this.joinUrl(this.formatUrl(data.url), 'artifact', qrcodeRelativePath)
+                        this.plistUrl = this.joinUrl(this.formatUrl(this.buildUrl), 'artifact', plistRelativePath, service = true)
+                        this.jenkinsUrl = this.formatUrl(data.url.split('/job/')[0])
                         jobUrl = this.buildUrl.split(`/${data.id}/`)[0]
-                        this.getJobInfo(this.formatUrl(jobUrl))
-                        this.lastBuildPlistUrl = this.joinUrl(jobUrl, 'lastSuccessfulBuild/artifact', plistRelativePath, service = true)
+                        this.getJobInfo(`${this.formatUrl(jobUrl)}api/json`)
+                        this.lastBuildPlistUrl = this.joinUrl(this.formatUrl(jobUrl), 'lastSuccessfulBuild/artifact', plistRelativePath, service = true)
                     });
             },
         },
