@@ -48,6 +48,4 @@ class EnvEnum(Enum):
     ARCHIVE_ITMS_SERVICE_URL = f'{ARCHIVE_URL_HTTPS}itms-services.plist'  # itms-services.plist 文件 URL
 
     # Command
-    ALTOOL = '$(dirname $(xcode-select -p))/Applications/' \
-             'Application\ Loader.app/Contents/Frameworks/' \
-             'ITunesSoftwareService.framework/Versions/A/Support/altool'
+    ALTOOL = 'xcrun altool'
