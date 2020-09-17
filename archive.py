@@ -2,8 +2,8 @@ import os
 import shutil
 import subprocess
 
-from libs.env_enum import EnvEnum
-from libs.make_qr_code import make_qr
+from utils.env_enum import EnvEnum
+from utils.make_qr_code import make_qr
 
 
 def upload_itunes_connect(ipa_path):

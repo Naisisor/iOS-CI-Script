@@ -12,6 +12,7 @@ class EnvEnum(Enum):
     CONF_FILE_NAME = os.getenv('CONF_FILE_NAME')  # 配置文件的名称
     CONFIGURATION = os.getenv('CONFIGURATIONS')  # app configuration
     APP_VERSION = os.getenv('APP_VERSION')  # app 版本号
+    WORKSPACE_URL = os.getenv('WORKSPACE_URL')  # 工作空间 URL，需从 Jenkins 上获取 workspace url
 
     # iTunes Connect 配置
     UPLOAD_ITUNES_CONNECT = os.getenv('UPLOAD_ITUNES_CONNECT', 'false')  # 上传 iTunes Connect，默认 false
@@ -35,7 +36,6 @@ class EnvEnum(Enum):
     SCRIPT_ITMS_SERVICE_PATH = f'{SCRIPT_PATH}/plist/itms-services.plist'  # 脚本中的 itms-services.plist 的路径
 
     # URL
-    WORKSPACE_URL = f'{BUILD_URL}execution/node/3/ws/'  # 工作空间 URL（需自行修改）
     SCRIPT_URL = f'{WORKSPACE_URL}{SCRIPT_DIR_NAME}/'  # 每次构建脚本文件的 URL
     ARTIFACT_URL = f'{BUILD_URL}artifact/'  # artifact URL
     ARCHIVE_URL = f'{ARTIFACT_URL}{ARCHIVE_DIR_NAME}/'  # 每次构建归档文件的 URL

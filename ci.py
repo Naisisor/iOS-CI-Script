@@ -1,6 +1,6 @@
 from archive import archive_file
 from compile import compile_app
-from libs.env_enum import EnvEnum
+from utils.env_enum import EnvEnum
 from modify_plist import ModifyPlist
 
 

@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from libs.env_enum import EnvEnum
+from utils.env_enum import EnvEnum
 
 
 def compile_app(app_workspace, app_scheme, method):

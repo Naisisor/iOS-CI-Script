@@ -1,9 +1,9 @@
-from libs.configuration import Configuration
-from libs.env_enum import EnvEnum
-from libs.plist_operation import PlistOperation
+from utils.configuration import Configuration
+from utils.env_enum import EnvEnum
+from utils.handle_plist import HandlePlist
 
 
-class ModifyPlist(PlistOperation):
+class ModifyPlist(HandlePlist):
     """ 修改配置文件 """
 
     def __init__(self, plist_path):
@@ -20,7 +20,7 @@ class ModifyPlist(PlistOperation):
         """ 修改项目中的需要修改的 plist 文件 """
         for plist_path in self.app_config.plist_path_list:
             plist_full_path = f'{EnvEnum.WORKSPACE.value}/{plist_path}'
-            project_plist = PlistOperation(plist_full_path)
+            project_plist = HandlePlist(plist_full_path)
             app_name = project_plist.content.get(
                 'CFBundleDisplayName')
             if EnvEnum.CONFIGURATION.value != EnvEnum.DIST_CONFIGURATION_NAME.value:
@@ -33,18 +33,18 @@ class ModifyPlist(PlistOperation):
             project_plist.modify(
                 'CFBundleVersion',
                 EnvEnum.BUILD_NUM.value)  # 修改 ipa 构建号
-            project_plist.rewrite()
+            project_plist.write()
 
     def modify_export_plist(self):
         """ 修改 exportOptions plist 文件 """
-        export_plist = PlistOperation(self.export_plist_path)
+        export_plist = HandlePlist(self.export_plist_path)
         export_plist.modify('teamID', self.app_config.team_id)
         export_plist.modify('provisioningProfiles', self.app_config.profiles)
-        export_plist.rewrite()
+        export_plist.write()
 
     def modify_services_plist(self):
         # 修改 itms-services.plist
-        service = PlistOperation(
+        service = HandlePlist(
             f'{EnvEnum.SCRIPT_ITMS_SERVICE_PATH.value}')
         assets = service.content['items'][0]['assets']
         assets[0]['url'] = f'{EnvEnum.ARCHIVE_URL_HTTPS.value}{self.app_config.scheme}.ipa'
@@ -54,4 +54,4 @@ class ModifyPlist(PlistOperation):
         metadata['bundle-identifier'] = self.app_config.bundle_id
         metadata['bundle-version'] = EnvEnum.APP_VERSION.value
         metadata['title'] = self.app_config.app_name
-        service.rewrite()
+        service.write()
